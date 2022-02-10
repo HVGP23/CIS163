@@ -12,7 +12,7 @@ public interface IChessPiece {
      *
      * @return the type of this piece
      */
-    String type();
+    //String type();
 
     /**
      * Returns whether the piece at location {@code [move.fromRow, move.fromColumn]} is allowed to move to location
@@ -26,9 +26,9 @@ public interface IChessPiece {
      * @param move  a object describing the move to be made.
      * @param board the in which this piece resides.
      * @return {@code true} if the proposed move is valid, {@code false} otherwise.
-     * @throws IndexOutOfBoundsException if either {@code [move.fromRow, move.fromColumn]} or {@code [move.toRow,
+     * @throws //IndexOutOfBoundsException if either {@code [move.fromRow, move.fromColumn]} or {@code [move.toRow,
      *                                   move.toColumn]} don't represent valid locations on the board.
-     * @throws IllegalArgumentException  if {@code this} object isn't the piece at location {@code [move.fromRow, move.fromColumn]}.
+     * @throws //IllegalArgumentException  if {@code this} object isn't the piece at location {@code [move.fromRow, move.fromColumn]}.
      */
     boolean isValidMove(Move move, IChessPiece[][] board);
 }
