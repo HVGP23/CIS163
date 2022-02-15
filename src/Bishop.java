@@ -1,4 +1,4 @@
-package W22Project2ChessGIVETOSTUDENTS;
+
 
 public class Bishop extends ChessPiece {
 

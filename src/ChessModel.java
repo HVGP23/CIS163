@@ -1,4 +1,4 @@
-package W22Project2ChessGIVETOSTUDENTS;
+
 
 public class ChessModel implements IChessModel {	 
     private IChessPiece[][] board;

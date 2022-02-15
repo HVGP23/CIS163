@@ -1,4 +1,3 @@
-package W22Project2ChessGIVETOSTUDENTS;
 
 public abstract class ChessPiece implements IChessPiece {
 

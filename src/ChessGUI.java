@@ -1,4 +1,4 @@
-package W22Project2ChessGIVETOSTUDENTS;
+
 
 import java.awt.Dimension;
 

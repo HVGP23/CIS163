@@ -1,5 +1,3 @@
-package W22Project2ChessGIVETOSTUDENTS;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

@@ -13,7 +13,7 @@ public interface IChessPiece {
      * Does this work? testing with jack
      * @return the type of this piece
      */
-    //String type();
+    String type();
 
     /**
      * Returns whether the piece at location {@code [move.fromRow, move.fromColumn]} is allowed to move to location
