@@ -12,7 +12,7 @@ public interface IChessPiece {
      * Return the type of this piece ("King", "Queen", "Rook", etc.).  Note:  In this case "type" refers to the game
      * of chess, not the type of the Java class.
      *
-     * Does this work? testing with jack
+     * Does this work? testing with Hector
      * @return the type of this piece
      */
     String type();
