@@ -1,5 +1,6 @@
+package Chess;
 
-    public interface IChessModel {
+public interface IChessModel {
 
         /**
          * Returns whether the game is complete.
