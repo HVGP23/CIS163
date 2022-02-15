@@ -13,6 +13,7 @@ public interface IChessPiece {
      * of chess, not the type of the Java class.
      *
      * Does this work? testing with Hector
+     * Testing once again with Jack
      * @return the type of this piece
      */
     String type();
