@@ -20,10 +20,6 @@
          */
         boolean isValidMove(Move move);
 
-
-
-
-
         /**
          * Moves the piece from location {@code [move.fromRow, move.fromColumn]} to location {@code [move.fromRow,
          * move.fromColumn]}.
