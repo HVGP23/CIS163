@@ -45,7 +45,6 @@ public class ChessPanel extends JPanel {
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
-
                 if (model.pieceAt(r, c) == null) {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
@@ -59,7 +58,6 @@ public class ChessPanel extends JPanel {
                 boardpanel.add(board[r][c]);
             }
         }
-
         add(boardpanel, BorderLayout.WEST);
         boardpanel.setPreferredSize(new Dimension(600, 600));
         add(buttonpanel);
@@ -76,6 +74,8 @@ public class ChessPanel extends JPanel {
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
+            // Only for mac to visual the spaces, comment out for non-mac users
+            board[r][c].setOpaque(true);
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
             board[r][c].setBackground(Color.WHITE);
         }
