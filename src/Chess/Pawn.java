@@ -69,7 +69,11 @@ public class Pawn extends ChessPiece {
 			return false;
 		}
 
+		if (move.fromColumn - move.toColumn > 1 || move.fromColumn - move.toColumn < -1) {
+			return false;
+		}
 
+		// Here you go
 
 		return true;
 	}
