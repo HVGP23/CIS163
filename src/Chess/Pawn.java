@@ -73,6 +73,15 @@ public class Pawn extends ChessPiece {
 			return false;
 		}
 
+		if(move.fromRow - move.toRow <= -1 && player() == Player.WHITE){
+			return false;
+		}
+
+		if(move.fromRow - move.toRow >= 1 && player() == Player.BLACK){
+			return false;
+		}
+
+
 		// Here you go
 
 		return true;
