@@ -7,7 +7,7 @@ public abstract class ChessPiece implements IChessPiece {
 
 	/**
 	 * The ChessPiece method is a protected method that can only be accessed
-	 * by it's class and classes within the chess package. Sets the owner of the
+	 * by its class and classes within the chess package. Sets the owner of the
 	 * chess piece
 	 *
 	 * @param player

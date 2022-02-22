@@ -8,7 +8,7 @@ public class ChessModel implements IChessModel {
 
 	/**
 	 * The ChessModel Constructor creates an 8 x 8 board
-	 * assig
+	 *
 	 */
 	public ChessModel() {
 		board = new IChessPiece[8][8];
