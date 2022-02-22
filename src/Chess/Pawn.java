@@ -81,10 +81,6 @@ public class Pawn extends ChessPiece {
 			return false;
 		}
 
-
-		// Here you go
-		// test 2
-
 		return true;
 	}
 }
