@@ -31,74 +31,86 @@ public class Pawn extends ChessPiece {
 			return false;
 		}
 
-		// These if statements are only for the pawn's first move
+		// These if statements are only for the black pawn's first move
 		if (move.fromRow == 1 && player() == Player.BLACK) {
 			if (move.toRow > 3) {
-				System.out.println("You moved the pawn too much");		// DELETE
+				System.out.println("You moved the black pawn too much");		// DELETE
 				return false;
 			}
 
+//			if (board[move.toRow][move.toColumn].player() == Player.WHITE) {
+//				System.out.println("Testing the initial diagonal black pawn move");
+//				return true;
+//			}
+
 			// Cannot move diagonally unless there is a chess piece to be taken
 			if (move.fromColumn != move.toColumn) {
-				// However, if the pawn has not moved and it can take a chess piece
-				// We will allow it here
-				if (board[move.toRow][move.toColumn].player() == Player.WHITE) {
-					System.out.println("You took White chess piece");
-					return true;
-				}
-				System.out.println("Can't move diagonally");			// DELETE
+				System.out.println("Can't move diagonally");            // DELETE
 				return false;
 			}
 		}
 
-		// These if statements are only for the pawn's first move
+		// These if statements are only for the white pawn's first move
 		if (move.fromRow == 6 && player() == Player.WHITE) {
 			if (move.toRow < 4) {
-				System.out.println("You moved the pawn too much");		// DELETE
+				System.out.println("You moved the white pawn more than two spots");		// DELETE
 				return false;
 			}
-			// Cannot move diagonally unless there is a chess piece to be taken
+
+			// doesn't allow the pawn to move diagonally
 			if (move.fromColumn != move.toColumn) {
-				// However, if the pawn has not moved and it can take a chess piece
-				// We will allow it.
-				if (board[move.toRow][move.toColumn].player() == Player.BLACK) {
-					System.out.println("You took a Black chess piece");
-					return true;
-				}
-				System.out.println("Can't move diagonally");			// DELETE
+				System.out.println("Can't move diagonally");            // DELETE
 				return false;
 			}
 		}
 
 		// After the initial move, the white pawn cannot move more than 1 space
 		if (move.fromRow - move.toRow > 1 && player() == Player.WHITE && move.fromRow != 6) {
-			System.out.println("Can't move back white pawn");		// DELETE
+			System.out.println("Pawn cannot move more than one space after initial move");		// DELETE
 			return false;
 		}
 
 		// After the initial move, the black pawn cannot move more than 1 space
 		if (move.fromRow - move.toRow < -1 && player() == Player.BLACK && move.fromRow != 1) {
-			System.out.println("Can't move back black pawn");		// DELETE
+			System.out.println("Pawn cannot move more than one space after initial move");		// DELETE
 			return false;
 		}
 
-		// Allow for a diagonal move to occur (DOUBLE CHECK) If there isn't a piece there it currently crashes
+		// Allow diagonal move for black pawn when there is a chess piece present
+		// NEED MORE: we need to make sure that the chess piece it take is the opposite color
 		if (move.fromColumn - move.toColumn == 1) {
+
+			// does not allow the pawn to move diagonally if there isn't a piece there
+			if (board[move.toRow][move.toColumn] == null) {
+				System.out.println("There isn't a chess piece there");		// DELETE
+				return false;
+			}
+
+			// allows the black pawn to take a white chess piece
 			if (board[move.toRow][move.toColumn].player() == Player.WHITE) {
 				System.out.println("You took white chess piece");		// DELETE
 				return true;
 			}
 		}
 
-		// Allow for a diagonal move to occur (DOUBLE CHECK) If there isn't a piece there it currently crashes
+		// Allow diagonal move  for white pawn when there is a chess piece present
+		// NEED MORE: we need to make sure that the chess piece it take is the opposite color
 		if (move.fromColumn - move.toColumn == -1) {
+
+			// does not allow the pawn to move diagonally if there isn't a piece there
+			if (board[move.toRow][move.toColumn] == null) {
+				System.out.println("There isn't a chess piece there");		// DELETE
+				return false;
+			}
+
+			// allows white pawn to take a black chess piece
 			if (board[move.toRow][move.toColumn].player() == Player.BLACK) {
 				System.out.println("You took black chess piece");		// DELETE
 				return true;
 			}
 		}
 
-		// Doesn't allow the pawn to move column to column
+		// Doesn't allow the pawns to move column to column
 		if (move.fromColumn - move.toColumn > 2 || move.fromColumn - move.toColumn < -2) {
 			System.out.println("Can't move to another column");		// DELETE
 			return false;
@@ -106,19 +118,20 @@ public class Pawn extends ChessPiece {
 
 		// Doesn't allow the white pawns to move back
 		if(move.fromRow - move.toRow <= -1 && player() == Player.WHITE){
-			System.out.println("Can't move back white pawn");		// DELETE
+			System.out.println("white pawn cannot move back a space");		// DELETE
 			return false;
 		}
 
 		// Doesn't allow the black pawns to move back
 		if (move.fromRow - move.toRow >= 1 && player() == Player.BLACK){
-			System.out.println("Can't move back black pawn");		// DELETE
+			System.out.println("black pawn cannot move back a space");		// DELETE
 			return false;
 		}
 
 		// Doesn't allow pawns to move forward if there is another chess piece present at that location on the board
+		// NEED HELP: This needs to be refined
 		if (board[move.toRow][move.toColumn] != null) {
-			System.out.println("There is a chess piece there");		// DELETE
+			System.out.println("There is a chess piece in front of you");		// DELETE
 			return false;
 		}
 
