@@ -41,6 +41,6 @@ public abstract class ChessPiece implements IChessPiece {
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		boolean valid = false;
 
-		return false;
+		return valid;
 	}
 }
