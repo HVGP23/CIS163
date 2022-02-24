@@ -14,6 +14,7 @@ public class Bishop extends ChessPiece {
 	
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+		// Stops the bishop from jumping pieces when moving northeast
 		if (move.fromRow > move.toRow && move.fromColumn < move.toColumn) {
 			int j = move.fromColumn;
 
@@ -26,12 +27,37 @@ public class Bishop extends ChessPiece {
 			}
 		}
 
-		// For moving backwards not finished yet
-		if (move.fromRow > move.toRow && move.fromColumn < move.toColumn) {
+		// Stops the bishop from jumping pieces when moving southwest
+		if (move.fromRow < move.toRow && move.fromColumn > move.toColumn) {
+			int j = move.fromColumn;
+
+			for (int i = move.fromRow + 1; i < move.toRow; i++) {
+				j--;
+				if (board[i][j] != null) {
+					System.out.println("Can't jump pieces");
+					return false;
+				}
+			}
+		}
+
+		// This prevents the bishop from jumping any piece when moving southeast
+		if (move.fromRow < move.toRow && move.fromColumn < move.toColumn) {
+			int j = move.fromColumn;
+
+			for (int i = move.fromRow + 1; i < move.toRow; i++) {
+				j++;
+				if (board[i][j] != null) {
+					System.out.println("Can't jump pieces");
+					return false;
+				}
+			}
+		}
+
+		if (move.fromRow > move.toRow && move.fromColumn > move.toColumn) {
 			int j = move.fromColumn;
 
 			for (int i = move.fromRow - 1; i > move.toRow; i--) {
-				j++;
+				j--;
 				if (board[i][j] != null) {
 					System.out.println("Can't jump pieces");
 					return false;
@@ -50,8 +76,10 @@ public class Bishop extends ChessPiece {
 
 		// This statement allows the white team to destroy black pieces
 		if(board[move.toRow][move.toColumn] != null &&
-				board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.WHITE)
+				board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.WHITE) {
+			System.out.println("You destroyed a black piece");
 			return true;
+		}
 
 		// This statement makes it so the black team can't remove its own pieces, or jump
 		if(board[move.toRow][move.toColumn] != null &&
@@ -60,11 +88,11 @@ public class Bishop extends ChessPiece {
 
 		// This statement allows the black team to destroy black pieces
 		if(board[move.toRow][move.toColumn] != null &&
-				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.BLACK)
+				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.BLACK) {
+			System.out.println("You destroyed a white piece");
 			return true;
+		}
 
 		return true;
-
-
 	}
 }
