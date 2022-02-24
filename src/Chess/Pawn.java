@@ -101,7 +101,6 @@ public class Pawn extends ChessPiece {
 		}
 
 		// Doesn't allow pawns to move forward if there is another chess piece present at that location on the board
-		// NEED HELP: This needs to be refined
 		if (board[move.toRow][move.toColumn] != null) {
 			System.out.println("There is a chess piece in front of you");		// DELETE
 			return false;
