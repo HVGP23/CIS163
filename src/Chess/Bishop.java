@@ -14,24 +14,40 @@ public class Bishop extends ChessPiece {
 	
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+		if (move.fromRow > move.toRow && move.fromColumn < move.toColumn) {
+			int j = move.fromColumn;
+
+			for (int i = move.fromRow - 1; i < move.toRow; i++) {
+				j += 1;
+				if (board[i][j] != null) {
+					System.out.println("Can't jump pieces");
+					return false;
+				}
+			}
+		}
+
 		// For the Bishop, the diagonals length and width must be equal. This statement checks that
 		if(abs(move.toRow - move.fromRow) != abs(move.toColumn - move.fromColumn))
 			return false;
 
 		// This statement makes it so the white team can't remove its own pieces, or jump
-		if(board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.WHITE)
+		if(board[move.toRow][move.toColumn] != null &&
+				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.WHITE)
 			return false;
 
 		// This statement allows the white team to destroy black pieces
-		if(board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.WHITE)
+		if(board[move.toRow][move.toColumn] != null &&
+				board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.WHITE)
 			return true;
 
 		// This statement makes it so the black team can't remove its own pieces, or jump
-		if(board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.BLACK)
+		if(board[move.toRow][move.toColumn] != null &&
+				board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.BLACK)
 			return false;
 
 		// This statement allows the black team to destroy black pieces
-		if(board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.BLACK)
+		if(board[move.toRow][move.toColumn] != null &&
+				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.BLACK)
 			return true;
 
 		return true;
