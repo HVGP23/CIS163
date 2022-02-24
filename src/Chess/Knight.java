@@ -12,9 +12,9 @@ public class Knight extends ChessPiece {
 
 	public boolean isValidMove(Move move, IChessPiece[][] board){
 
-		boolean valid = true;
-        // More code is needed
-		return valid;
+
+
+		return true;
 		
 	}
 

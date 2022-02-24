@@ -17,8 +17,21 @@ public class Bishop extends ChessPiece {
 		if (move.fromRow > move.toRow && move.fromColumn < move.toColumn) {
 			int j = move.fromColumn;
 
-			for (int i = move.fromRow - 1; i < move.toRow; i++) {
-				j += 1;
+			for (int i = move.fromRow - 1; i > move.toRow; i--) {
+				j++;
+				if (board[i][j] != null) {
+					System.out.println("Can't jump pieces");
+					return false;
+				}
+			}
+		}
+
+		// For moving backwards not finished yet
+		if (move.fromRow > move.toRow && move.fromColumn < move.toColumn) {
+			int j = move.fromColumn;
+
+			for (int i = move.fromRow - 1; i > move.toRow; i--) {
+				j++;
 				if (board[i][j] != null) {
 					System.out.println("Can't jump pieces");
 					return false;
