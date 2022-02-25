@@ -1,16 +1,42 @@
 package Chess;
 
+/* *********************************************************************
+ * The rook class extends ChessPiece. The rook's constructor uses the
+ * keyword super to call the parent class', ChessPiece constructor. The
+ * class has two primary methods, the first one returns the type of chess piece
+ * and the second returns if the player's move is a valid move for the
+ * respective chess piece.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 public class Rook extends ChessPiece {
 
+	/**
+	 * Rook Class Constructor
+	 * @param player
+	 */
 	public Rook(Player player) {
 		super(player);
 	}
 
+	/**
+	 * The type method returns the name of the chess piece as a string
+	 * @return the name of the chess piece as a string
+	 */
 	public String type() {
 		return "Rook";
 	}
-	
-	// determines if the move is valid for a rook piece
+
+	/**
+	 * The isValidMove method verifies the that rook's move is valid. Rook's cannot jump pieces
+	 * nor move diagonally.
+	 * @param move  a object describing the move to be made.
+	 * @param board the in which this piece resides.
+	 * @return true if the rook's move is valid
+	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
 		// the rook cannot move diagonally

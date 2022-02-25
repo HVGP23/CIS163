@@ -1,17 +1,44 @@
 package Chess;
 
+/* *********************************************************************
+ * The Bishop class extends ChessPiece. The Bishop's constructor uses the
+ * keyword super to call the parent class', ChessPiece constructor. The
+ * class has two primary methods, the first one returns the type of chess piece
+ * and the second returns if the player's move is a valid move for the
+ * respective chess piece.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 import static java.lang.Math.abs;
 
 public class Bishop extends ChessPiece {
 
+	/**
+	 * Bishop Class Constructor
+	 * @param player
+	 */
 	public Bishop(Player player) {
 		super(player);
 	}
 
+	/**
+	 * The type method returns the name of the chess piece as a string
+	 * @return the name of the chess piece as a string
+	 */
 	public String type() {
 		return "Bishop";
 	}
-	
+
+	/**
+	 * The isValidMove method verifies the that Bishop's move is valid. Bishop's can only
+	 * move diagonally and cannot jump pieces.
+	 * @param move  a object describing the move to be made.
+	 * @param board the in which this piece resides.
+	 * @return true if the bishop's move is valid
+	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
 		// Stops the bishop from jumping pieces when moving northeast

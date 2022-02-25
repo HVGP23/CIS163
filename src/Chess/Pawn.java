@@ -1,5 +1,17 @@
 package Chess;
 
+/* *********************************************************************
+ * The pawn class extends ChessPiece. The pawn's constructor uses the
+ * keyword super to call the parent class', ChessPiece constructor. The
+ * class has two primary methods, the first one returns the type of chess piece
+ * and the second returns if the player's move is a valid move for the
+ * respective chess piece.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 public class Pawn extends ChessPiece {
 	/**
 	 * The Pawn Constructor uses the ChessPiece constructor (parent class)
