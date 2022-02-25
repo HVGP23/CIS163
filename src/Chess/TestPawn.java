@@ -1,69 +1,114 @@
 package Chess;
 
+/* *********************************************************************
+ * The TestPawn class test the pawn class to verify that all moves done
+ * with the pawn are valid.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestPawn {
 
     @Test
-    public void InitialPawnMoveTest() {
+    public void initialPawnMoveTest() {
 
         // creates the game
         ChessModel pawn = new ChessModel();
 
-        // Testing the initial white pawn first move with one
-        Move white0 = new Move(1, 0, 2, 0);
-        Move white1 = new Move(1, 1, 2, 1);
-        Move white2 = new Move(1, 2, 2, 2);
-        Move white3 = new Move(1, 3, 2, 3);
-        Move white4 = new Move(1, 4, 2, 4);
-        Move white5 = new Move(1, 5, 2, 5);
-        Move white6 = new Move(1, 6, 2, 6);
-        Move white7 = new Move(1, 7, 2, 7);
+        // Testing the initial white pawn first move with single space
+        Move whiteInit1 = new Move(6, 0, 5, 0);
 
-        // Testing the initial black pawn first move with one single move
-        Move black0 = new Move(6, 0, 5, 0);
-        Move black1 = new Move(6, 1, 5, 1);
-        Move black2 = new Move(6, 2, 5, 2);
-        Move black3 = new Move(6, 3, 5, 3);
-        Move black4 = new Move(6, 4, 5, 4);
-        Move black5 = new Move(6, 5, 5, 5);
-        Move black6 = new Move(6, 6, 5, 6);
-        Move black7 = new Move(6, 7, 5, 7);
+        // Testing the initial white pawn first move with two spaces
+        Move whiteInit2 = new Move(6, 0, 4, 0);
 
-        // Valid testing for initial move for white pawn
-        assertTrue(pawn.isValidMove(white0));
-        assertTrue(pawn.isValidMove(white1));
-        assertTrue(pawn.isValidMove(white2));
-        assertTrue(pawn.isValidMove(white3));
-        assertTrue(pawn.isValidMove(white4));
-        assertTrue(pawn.isValidMove(white5));
-        assertTrue(pawn.isValidMove(white6));
-        assertTrue(pawn.isValidMove(white7));
+        // Testing the initial black pawn first move with one single space
+        Move blackInit1 = new Move(1, 0, 2, 0);
 
-        // Valid testing for initial move for black pawn
-        assertTrue(pawn.isValidMove(black0));
-        assertTrue(pawn.isValidMove(black1));
-        assertTrue(pawn.isValidMove(black2));
-        assertTrue(pawn.isValidMove(black3));
-        assertTrue(pawn.isValidMove(black4));
-        assertTrue(pawn.isValidMove(black5));
-        assertTrue(pawn.isValidMove(black6));
-        assertTrue(pawn.isValidMove(black7));
+        // Testing the initial black pawn first move with two spaces
+        Move blackInit2 = new Move(1, 0, 3, 0);
 
-        //  For complicated tests, you'll do several moves to prep the test case
-        // for example these moves will the white pawns to row 5 from 6
-        pawn.move(white0);
-        pawn.move(white1);
-        pawn.move(white2);
-        pawn.move(white3);
-        pawn.move(white4);
-        pawn.move(white5);
-        pawn.move(white6);
-        pawn.move(white7);
+        // Valid testing for initial move for white pawn (1 forward move)
+        assertTrue(pawn.isValidMove(whiteInit1));
+
+        // Valid test for initial move for white pawn (2 forward moves)
+        assertTrue(pawn.isValidMove(whiteInit2));
+
+        // Valid testing for initial move for black pawn (1 forward move)
+        assertTrue(pawn.isValidMove(blackInit1));
+
+        // Valid testing for initial move for black pawn (2 forward moves)
+        assertTrue(pawn.isValidMove(blackInit2));
+
+        /* **************************************************************************************
+         * For complicated tests, we will need to do several moves to prep the test case
+         ************************************************************************************** */
+
+        // move white pawn from r = 6 & c = 0 to r = 5 & c = 0
+        pawn.move(whiteInit1);
+
+        // move white pawn from r = 6 & c = 0 to r = 4 & c = 0
+        pawn.move(whiteInit2);
+
+        // move white pawn from r = 6 & c = 0 to r = 3 & c = 0 which is invalid (moved too many spaces)
+        Move whiteInit3 = new Move(6, 0, 3, 0);
+        assertFalse(pawn.isValidMove(whiteInit3));
+
+        // move white pawn from r = 2 & c = 1 to r = 4 & c = 2 which is invalid (moved to many spaces)
+        Move whiteInit4 = new Move(6, 3, 3, 3);
+        assertFalse(pawn.isValidMove(whiteInit4));
+    }
+
+    @Test
+    public void pawnDiagonalTest() {
+        // creates the game
+        ChessModel pawn = new ChessModel();
+
+        // Testing the initial white pawn first diagonal move to the right
+        Move whiteInit1 = new Move(6, 0, 5, 1);
+
+        // Testing the initial white pawn first diagonal move to the left
+        Move whiteInit2 = new Move(6, 1, 5, 0);
+
+        // Testing the initial black pawn first diagonal move to the right
+        Move blackInit1 = new Move(1, 0, 2, 1);
+
+        // Testing the initial white pawn first diagonal move to the left
+        Move blackInit2 = new Move(1, 1, 2, 0);
+
+        // checking diagonal moves when there is not an opponent's chess piece at the location
+        assertFalse(pawn.isValidMove(whiteInit1));
+        assertFalse(pawn.isValidMove(whiteInit2));
+        assertFalse(pawn.isValidMove(blackInit1));
+        assertFalse(pawn.isValidMove(blackInit2));
+
+
+//        // Test when there is a black piece there
+//        pawn.setPiece(5, 0, );
 //
-//        Move move2 = new Move(4, 5, 4, 2);
-//        assertFalse(before.isValidMove(move2));
+//        Move whiteInit3 = new Move(6, 1, 5, 0);
+//
+//        assertTrue(pawn.isValidMove(whiteInit3));
+//        // Test when there is a same color chess piece there
+    }
 
+    @Test
+    public void pawnBackTest() {
+        // creates the game
+        ChessModel pawn = new ChessModel();
+
+        // Testing the initial white pawn first move with single space
+        Move whiteInit1 = new Move(4, 0, 7, 0);
+
+        // Testing the initial black pawn first move with one single space
+        Move blackInit1 = new Move(4, 0, 0, 0);
+
+        // verifying that the pawn cannot move back
+        assertFalse(pawn.isValidMove(whiteInit1));
+        assertFalse(pawn.isValidMove(blackInit1));
     }
 }
