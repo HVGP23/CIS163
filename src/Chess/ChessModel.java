@@ -10,7 +10,7 @@ public class ChessModel implements IChessModel {
 	private int blackCol;
 	private int whiteRow;
 	private int whiteCol;
-
+	public boolean inCheck = false;
 
 
 
@@ -23,6 +23,7 @@ public class ChessModel implements IChessModel {
 
 		player = Player.WHITE;
 		player2 = Player.BLACK;
+		setNextPlayer();		// make the first player be white
 
 		board[0][0] = new Rook(Player.BLACK);
 		board[0][1] = new Knight(Player.BLACK);
@@ -82,11 +83,11 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-		getKingsLocation(p);
-
-		return false;
+		if (getKingsLocation(p)) {
+			System.out.println("King is in check");
+		}
+		return getKingsLocation(p);
 	}
-
 
 	public Player currentPlayer() {
 		return player;
@@ -118,7 +119,8 @@ public class ChessModel implements IChessModel {
 	 *
 	 * @param p
 	 */
-	public void getKingsLocation(Player p) {
+	public boolean getKingsLocation(Player p) {
+
 
 		// get the king's current location
 		for (int i = 0; i < board.length; i++) {
@@ -149,6 +151,105 @@ public class ChessModel implements IChessModel {
 		System.out.println("Black King is at Row: " + blackRow + " Col: " + blackCol
 				+ " \nWhite King is at Row: " + whiteRow + " Col: " + whiteCol);
 
+		// WORKING HERE
+
+		// get the rook's current location
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				// if the space is empty, move on
+				if (board[i][j] != null) {
+					// checks to see if the piece at location i and j is a rook
+					if (Objects.equals(board[i][j].type(), "Rook")) {
+						// check if the current location is owned by black
+						if (pieceAt(i,j).player().equals(p)) {
+							Move blackRookMove = new Move(i, j, whiteRow, whiteCol);
+							// returns if the black rook can capture the white king
+						inCheck = board[i][j].isValidMove(blackRookMove, board);
+						}
+						// check if the current location is owned by white
+						if (pieceAt(i, j).player().equals(p.next())) {
+							Move whiteRookMove = new Move(i, j, blackRow, blackCol);
+							// returns if the white rook can take the black king
+							inCheck = board[i][j].isValidMove(whiteRookMove, board);
+						}
+					}
+				}
+			}
+		}
+
+//		// get the bishop's current location
+//		for (int i = 0; i < board.length; i++) {
+//			for (int j = 0; j < board[i].length; j++) {
+//				// if the space is empty, move on
+//				if (board[i][j] != null) {
+//					// checks to see if the piece at location i and j is a rook
+//					if (Objects.equals(board[i][j].type(), "Bishop")) {
+//						// check if the current location is owned by black
+//						if (pieceAt(i,j).player().equals(p)) {
+//							Move blackBishopMove = new Move(i, j, whiteRow, whiteCol);
+//							// returns if the black rook can capture the white king
+//							inCheck = board[i][j].isValidMove(blackBishopMove, board);
+//						}
+//						// check if the current location is owned by white
+//						if (pieceAt(i, j).player().equals(p.next())) {
+//							Move whiteBishopMove = new Move(i, j, blackRow, blackCol);
+//							// returns if the white rook can take the black king
+//							inCheck = board[i][j].isValidMove(whiteBishopMove, board);
+//						}
+//					}
+//				}
+//			}
+//		}
+
+//		// get the knight's current location
+//		for (int i = 0; i < board.length; i++) {
+//			for (int j = 0; j < board[i].length; j++) {
+//				// if the space is empty, move on
+//				if (board[i][j] != null) {
+//					// checks to see if the piece at location i and j is a rook
+//					if (Objects.equals(board[i][j].type(), "Knight")) {
+//						// check if the current location is owned by black
+//						if (pieceAt(i,j).player().equals(p)) {
+//							Move blackKnightMove = new Move(i, j, whiteRow, whiteCol);
+//							// returns if the black rook can capture the white king
+//							inCheck = board[i][j].isValidMove(blackKnightMove, board);
+//						}
+//						// check if the current location is owned by white
+//						if (pieceAt(i, j).player().equals(p.next())) {
+//							Move whiteKnightMove = new Move(i, j, blackRow, blackCol);
+//							// returns if the white rook can take the black king
+//							inCheck = board[i][j].isValidMove(whiteKnightMove, board);
+//						}
+//					}
+//				}
+//			}
+//		}
+
+//		// get the queen's current location
+//		for (int i = 0; i < board.length; i++) {
+//			for (int j = 0; j < board[i].length; j++) {
+//				// if the space is empty, move on
+//				if (board[i][j] != null) {
+//					// checks to see if the piece at location i and j is a rook
+//					if (Objects.equals(board[i][j].type(), "Queen")) {
+//						// check if the current location is owned by black
+//						if (pieceAt(i,j).player().equals(p)) {
+//							Move blackQueenMove = new Move(i, j, whiteRow, whiteCol);
+//							// returns if the black rook can capture the white king
+//							inCheck = board[i][j].isValidMove(blackQueenMove, board);
+//						}
+//						// check if the current location is owned by white
+//						if (pieceAt(i, j).player().equals(p.next())) {
+//							Move whiteQueenMove = new Move(i, j, blackRow, blackCol);
+//							// returns if the white rook can take the black king
+//							inCheck = board[i][j].isValidMove(whiteQueenMove, board);
+//						}
+//					}
+//				}
+//			}
+//		}
+
+		return inCheck;
 	}
 
 	public void AI() {

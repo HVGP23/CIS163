@@ -25,7 +25,10 @@ public class ChessPanel extends JPanel {
     private ImageIcon bPawn;
     private ImageIcon bKnight;
 
+    // verifies that the selected piece is the from location
     private boolean firstTurnFlag;
+
+    // private class fields
     private int fromRow;
     private int toRow;
     private int fromCol;
@@ -56,7 +59,7 @@ public class ChessPanel extends JPanel {
                 }
 
                 setBackGroundColor(r, c);       // Doesn't work on mac, spoke with Mr. Beach and stated to have Jack
-                                                // run the code since he has a PC.
+                // run the code since he has a PC.
                 boardpanel.add(board[r][c]);
             }
         }
@@ -226,25 +229,31 @@ public class ChessPanel extends JPanel {
     // inner class that represents action listener for buttons
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            for (int r = 0; r < model.numRows(); r++)
-                for (int c = 0; c < model.numColumns(); c++)
+
+            for (int r = 0; r < model.numRows(); r++) {
+                for (int c = 0; c < model.numColumns(); c++) {
                     if (board[r][c] == event.getSource())
-                        if (firstTurnFlag == true) {
+                        // initial click of the piece to obtain the "from" location
+                        if (firstTurnFlag) {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
+                            // The "to" location of the piece selected
                         } else {
                             toRow = r;
                             toCol = c;
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
 
-                            if ((model.isValidMove(m)) == true) {
+                            // if the move is valid
+                            if ((model.isValidMove(m))) {
                                 model.move(m);
-                                model.inCheck(Player.BLACK);        // RIGHT HERE
                                 displayBoard();
                             }
                         }
-        }
+
+                }
+            }
+    }
     }
 }
