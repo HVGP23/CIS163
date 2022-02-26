@@ -241,8 +241,7 @@ public class ChessPanel extends JPanel {
 
                             if ((model.isValidMove(m)) == true) {
                                 model.move(m);
-                                model.inCheck(Player.BLACK);
-
+                                model.inCheck(Player.BLACK);        // RIGHT HERE
                                 displayBoard();
                             }
                         }

@@ -82,47 +82,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-
-			// get the king's current location
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-
-					// skip through empty spaces
-					while (board[i][j] == null) {
-
-						if (i == 7 && j == 7) {
-							// I need way to handle this case
-							// return false;
-
-						} else if (j < 7) {
-							j++;
-						} else if (i < 7 && j == 7) {
-							i++;
-							j = 0;
-						}
-					}
-
-					if (board[i][j].type() == "King") {
-
-						// check if the current location is owned by black
-						if (board[i][j].player().equals(p)){
-							// assign black king's location
-							blackRow = i;
-							blackCol = j;
-						}
-
-						// check if the current location is owned by white
-						if (board[i][j].player().equals(p.next())){
-							// assign white king's location
-							whiteRow = i;
-							whiteCol = j;
-						}
-					}
-				}
-			}
-
-		System.out.println("Black King is at Row: " + blackRow + " Col: " + blackCol);
-		System.out.println("White King is at Row: " + whiteRow + " Col: " + whiteCol);
+		getKingsLocation(p);
 
 		return false;
 	}
@@ -152,6 +112,45 @@ public class ChessModel implements IChessModel {
 		board[row][column] = piece;
 	}
 
+	/**
+	 * The getKingsLocation method tracks the location of both kings as they move
+	 * around the board. This is utilized to verify if either king is in check.
+	 *
+	 * @param p
+	 */
+	public void getKingsLocation(Player p) {
+
+		// get the king's current location
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				// if the space is empty, move on
+				if (board[i][j] != null) {
+					// checks to see if the piece at location i and j is a king
+					if (Objects.equals(board[i][j].type(), "King")) {
+
+						// check if the current location is owned by black
+						if (board[i][j].player().equals(p)) {
+							// assign black king's location
+							blackRow = i;
+							blackCol = j;
+						}
+
+						// check if the current location is owned by white
+						if (board[i][j].player().equals(p.next())) {
+							// assign white king's location
+							whiteRow = i;
+							whiteCol = j;
+						}
+					}
+				}
+			}
+		}
+
+		System.out.println("Black King is at Row: " + blackRow + " Col: " + blackCol
+				+ " \nWhite King is at Row: " + whiteRow + " Col: " + whiteCol);
+
+	}
+
 	public void AI() {
 		/*
 		 * Write a simple AI set of rules in the following order. 
@@ -171,4 +170,5 @@ public class ChessModel implements IChessModel {
 		 */
 
 		}
+
 }

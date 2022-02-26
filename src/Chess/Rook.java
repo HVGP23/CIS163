@@ -96,7 +96,7 @@ public class Rook extends ChessPiece {
 		// allows rook to move to an empty spot
 		if (board[move.toRow][move.toColumn] == null) {
 			// Print of the move (DELETE when done testing)
-			System.out.println(move);
+//			System.out.println(move);
 
 			return true;
 		}
