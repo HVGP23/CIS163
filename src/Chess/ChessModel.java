@@ -1,9 +1,17 @@
 package Chess;
 
-public class ChessModel implements IChessModel {	 
+import java.util.Objects;
+
+public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
 	private Player player;
 	private Player player2;
+	private int blackRow;
+	private int blackCol;
+	private int whiteRow;
+	private int whiteCol;
+
+
 
 
 	/**
@@ -74,8 +82,49 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-		boolean valid = false;
-		return valid;
+
+			// get the king's current location
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+
+					// skip through empty spaces
+					while (board[i][j] == null) {
+
+						if (i == 7 && j == 7) {
+							// I need way to handle this case
+							// return false;
+
+						} else if (j < 7) {
+							j++;
+						} else if (i < 7 && j == 7) {
+							i++;
+							j = 0;
+						}
+					}
+
+					if (board[i][j].type() == "King") {
+
+						// check if the current location is owned by black
+						if (board[i][j].player().equals(p)){
+							// assign black king's location
+							blackRow = i;
+							blackCol = j;
+						}
+
+						// check if the current location is owned by white
+						if (board[i][j].player().equals(p.next())){
+							// assign white king's location
+							whiteRow = i;
+							whiteCol = j;
+						}
+					}
+				}
+			}
+
+		System.out.println("Black King is at Row: " + blackRow + " Col: " + blackCol);
+		System.out.println("White King is at Row: " + whiteRow + " Col: " + whiteCol);
+
+		return false;
 	}
 
 
@@ -91,7 +140,7 @@ public class ChessModel implements IChessModel {
 		return 8;
 	}
 
-	public IChessPiece pieceAt(int row, int column) {		
+	public IChessPiece pieceAt(int row, int column) {
 		return board[row][column];
 	}
 

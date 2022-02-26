@@ -97,6 +97,7 @@ public class Rook extends ChessPiece {
 		if (board[move.toRow][move.toColumn] == null) {
 			// Print of the move (DELETE when done testing)
 			System.out.println(move);
+
 			return true;
 		}
 

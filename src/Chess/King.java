@@ -51,6 +51,7 @@ public class King extends ChessPiece {
 			return false;
 		}
 
+
 		return (move1.isValidMove(move, board) || move2.isValidMove(move, board));
 	}
 }

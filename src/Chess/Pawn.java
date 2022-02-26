@@ -119,7 +119,7 @@ public class Pawn extends ChessPiece {
 		}
 
 		// Print of the move (DELETE when done testing)
-		System.out.println(move);
+//		System.out.println(move);
 
 		// if all the cases have been covered, the pawn can move
 		return true;
