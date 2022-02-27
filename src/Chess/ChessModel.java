@@ -79,6 +79,7 @@ public class ChessModel implements IChessModel {
 
 	public boolean inCheck(Player p) {
 		boolean inCheck = false;
+		int count = 0;
 
 		// get the king's current location belonging to the current player
 		for (int i = 0; i < board.length; i++) {
@@ -102,27 +103,73 @@ public class ChessModel implements IChessModel {
 		System.out.println("The " + board[kingRow][kingCol].player().toString().toLowerCase(Locale.ROOT)
 				+ " King is located at " + "Row: " + kingRow + " Column: " + kingCol);
 
-
 		// check if the opposite player's pieces put the current player's king in check
-//		for (int i = 0; i < board.length; i++) {
-//			for (int j = 0; j < board[i].length; j++) {
-//				// if the space is empty, move on
-//				if (board[i][j] != null) {
-//					// check if the current location is owned the opposite player
-//					if (!board[i][j].player().equals(p)) {
-//						// create a new move with the "from" location being the current location of the piece
-//						// and the "to" location is the white king's location
-//						Move checkMove = new Move(i, j, kingRow, kingCol);
-//						// check if the move is valid
-//						if (!board[i][j].isValidMove(checkMove, board)) {
-//							break;
-//						}
-//						break;
-//					}
-//				}
-//			}
-//		}
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				// if the space is empty, move on
+				if (board[i][j] != null) {
+					// check if the current location is owned the opposite player
+					if (!board[i][j].player().equals(p)) {
+						// create a new move with the "from" location being the current location of the piece
+						// and the "to" location is the white king's location
+						if (Objects.equals(board[i][j].type(), "Pawn")) {
+							Move checkMove = new Move(i, j, kingRow, kingCol);
+							// check if the move is valid
+							if (board[i][j].isValidMove(checkMove, board)) {
+								count++;
+								System.out.println(count);
+							}
+						}
 
+						if (Objects.equals(board[i][j].type(), "Knight")) {
+							Move checkMove = new Move(i, j, kingRow, kingCol);
+							// check if the move is valid
+							if (board[i][j].isValidMove(checkMove, board)) {
+								count++;
+								System.out.println(count);
+							}
+						}
+
+//						if (Objects.equals(board[i][j].type(), "Bishop")) {
+//							Move checkMove = new Move(i, j, kingRow, kingCol);
+//							// check if the move is valid
+//							if (board[i][j].isValidMove(checkMove, board)) {
+//								count++;
+//								System.out.println(count);
+//							}
+//						}
+
+						if (Objects.equals(board[i][j].type(), "Queen")) {
+							Move checkMove = new Move(i, j, kingRow, kingCol);
+							// check if the move is valid
+							if (board[i][j].isValidMove(checkMove, board)) {
+								count++;
+								System.out.println(count);
+							}
+						}
+
+						if (Objects.equals(board[i][j].type(), "King")) {
+							Move checkMove = new Move(i, j, kingRow, kingCol);
+							// check if the move is valid
+							if (board[i][j].isValidMove(checkMove, board)) {
+								count++;
+								System.out.println(count);
+							}
+						}
+
+						if (Objects.equals(board[i][j].type(), "Rook")) {
+							Move checkMove = new Move(i, j, kingRow, kingCol);
+							// check if the move is valid
+							if (board[i][j].isValidMove(checkMove, board)) {
+								count++;
+								System.out.println(count);
+							}
+						}
+						inCheck = count > 0;
+					}
+				}
+			}
+		}
 		return inCheck;
 	}
 

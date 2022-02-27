@@ -3,6 +3,8 @@ package Chess;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Locale;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.*;
 
 public class ChessPanel extends JPanel {
@@ -233,7 +235,7 @@ public class ChessPanel extends JPanel {
                         if (board[r][c] == event.getSource())
                             // initial click of the piece to obtain the "from" location
                             if (firstTurnFlag) {
-                                System.out.println(model.currentPlayer().toString().toLowerCase(Locale.ROOT));
+//                                System.out.println(model.currentPlayer().toString().toLowerCase(Locale.ROOT));
                                 fromRow = r;
                                 fromCol = c;
                                 firstTurnFlag = false;
@@ -251,12 +253,28 @@ public class ChessPanel extends JPanel {
                                         if ((model.isValidMove(m))) {
                                             // move the chess piece
                                             model.move(m);
+                                            displayBoard();
                                             // next player is up
                                             model.setNextPlayer();
                                             // after the player moves, the next player must check to see if they are in check
-                                            model.inCheck(model.currentPlayer());
+                                            if (model.inCheck(model.currentPlayer())) {
+                                                // adds the black king icon to the option pane
+                                                if (model.currentPlayer() == Player.BLACK) {
+                                                    JOptionPane.showMessageDialog(null,
+                                                            model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
+                                                                    " king is danger of being captured!", "black king",
+                                                            JOptionPane.INFORMATION_MESSAGE, bKing);
+                                                }
+                                                // adds the white king icon to the option pane
+                                                if (model.currentPlayer() == Player.WHITE) {
+                                                    JOptionPane.showMessageDialog(null,
+                                                            model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
+                                                                    " king is danger of being captured!", "white king",
+                                                            JOptionPane.INFORMATION_MESSAGE, wKing);
+                                                }
+                                            }
                                             // may need to go between move and setNextPlayer
-                                            displayBoard();
+
                                         }
                                     }
                                 }
