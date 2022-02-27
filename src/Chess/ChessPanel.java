@@ -2,6 +2,7 @@ package Chess;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 import javax.swing.*;
 
 public class ChessPanel extends JPanel {
@@ -232,6 +233,7 @@ public class ChessPanel extends JPanel {
                         if (board[r][c] == event.getSource())
                             // initial click of the piece to obtain the "from" location
                             if (firstTurnFlag) {
+                                System.out.println(model.currentPlayer().toString().toLowerCase(Locale.ROOT));
                                 fromRow = r;
                                 fromCol = c;
                                 firstTurnFlag = false;
@@ -241,18 +243,25 @@ public class ChessPanel extends JPanel {
                                 toCol = c;
                                 firstTurnFlag = true;
                                 Move m = new Move(fromRow, fromCol, toRow, toCol);
-                                // if the move is valid
-                                if ((model.isValidMove(m))) {
-                                    // move the chess piece
-                                    model.move(m);
-                                    // next player is up
-                                    model.setNextPlayer();
-                                    // after the player moves, the next player must check to see if they are in check
-                                    model.inCheck(model.currentPlayer());
-                                    // may need to go between move and setNextPlayer
-                                    displayBoard();
+                                // we cannot move a null piece to another location doesn't make sense
+                                if (model.pieceAt(fromRow, fromCol) != null) {
+                                    // only allows the current player to go
+                                    if (model.pieceAt(fromRow, fromCol).player().equals(model.currentPlayer())) {
+                                        // if the move is valid
+                                        if ((model.isValidMove(m))) {
+                                            // move the chess piece
+                                            model.move(m);
+                                            // next player is up
+                                            model.setNextPlayer();
+                                            // after the player moves, the next player must check to see if they are in check
+                                            model.inCheck(model.currentPlayer());
+                                            // may need to go between move and setNextPlayer
+                                            displayBoard();
+                                        }
+                                    }
                                 }
                             }
+
                     }
                 }
         }

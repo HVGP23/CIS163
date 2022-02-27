@@ -37,6 +37,12 @@ public class Pawn extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+		// will not allow the pawn to be "moved" to its current location
+		if (move.fromRow == move.toRow && move.fromColumn == move.toColumn) {
+			System.out.println("You did not move the pawn");
+			return false;
+		}
+
 		// Will not allow the pawn to move from sideways
 		if (move.fromRow == move.toRow) {
 			System.out.println("Can't move sideways");
