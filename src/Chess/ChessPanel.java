@@ -25,7 +25,7 @@ public class ChessPanel extends JPanel {
     private ImageIcon bPawn;
     private ImageIcon bKnight;
 
-    // verifies that the selected piece is the from location
+    // verifies that the selected piece is the "from" location
     private boolean firstTurnFlag;
 
     // private class fields
@@ -45,7 +45,7 @@ public class ChessPanel extends JPanel {
         JPanel boardpanel = new JPanel();
         JPanel buttonpanel = new JPanel();
 
-        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
+        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 5, 5));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -54,12 +54,12 @@ public class ChessPanel extends JPanel {
                     board[r][c].addActionListener(listener);
                 } else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     placeWhitePieces(r, c);
-                }  else if (model.pieceAt(r, c).player() == Player.BLACK) {
+                } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     placeBlackPieces(r, c);
                 }
 
                 setBackGroundColor(r, c);       // Doesn't work on mac, spoke with Mr. Beach and stated to have Jack
-                // run the code since he has a PC.
+                                                // run the code since he has a PC.
                 boardpanel.add(board[r][c]);
             }
         }
@@ -81,7 +81,6 @@ public class ChessPanel extends JPanel {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
             // Only for mac to visual the spaces, comment out for non-mac users
-            board[r][c].setOpaque(true);
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
             board[r][c].setBackground(Color.WHITE);
         }
@@ -188,7 +187,6 @@ public class ChessPanel extends JPanel {
                 else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(wPawn);
-
                     if (model.pieceAt(r, c).type().equals("Rook"))
                         board[r][c].setIcon(wRook);
 
@@ -229,31 +227,34 @@ public class ChessPanel extends JPanel {
     // inner class that represents action listener for buttons
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
-            for (int r = 0; r < model.numRows(); r++) {
-                for (int c = 0; c < model.numColumns(); c++) {
-                    if (board[r][c] == event.getSource())
-                        // initial click of the piece to obtain the "from" location
-                        if (firstTurnFlag) {
-                            fromRow = r;
-                            fromCol = c;
-                            firstTurnFlag = false;
-                            // The "to" location of the piece selected
-                        } else {
-                            toRow = r;
-                            toCol = c;
-                            firstTurnFlag = true;
-                            Move m = new Move(fromRow, fromCol, toRow, toCol);
-
-                            // if the move is valid
-                            if ((model.isValidMove(m))) {
-                                model.move(m);
-                                displayBoard();
+                for (int r = 0; r < model.numRows(); r++) {
+                    for (int c = 0; c < model.numColumns(); c++) {
+                        if (board[r][c] == event.getSource())
+                            // initial click of the piece to obtain the "from" location
+                            if (firstTurnFlag) {
+                                fromRow = r;
+                                fromCol = c;
+                                firstTurnFlag = false;
+                                // The "to" location of the piece selected
+                            } else {
+                                toRow = r;
+                                toCol = c;
+                                firstTurnFlag = true;
+                                Move m = new Move(fromRow, fromCol, toRow, toCol);
+                                // if the move is valid
+                                if ((model.isValidMove(m))) {
+                                    // move the chess piece
+                                    model.move(m);
+                                    // next player is up
+                                    model.setNextPlayer();
+                                    // after the player moves, the next player must check to see if they are in check
+                                    model.inCheck(model.currentPlayer());
+                                    // may need to go between move and setNextPlayer
+                                    displayBoard();
+                                }
                             }
-                        }
-
+                    }
                 }
-            }
-    }
+        }
     }
 }
