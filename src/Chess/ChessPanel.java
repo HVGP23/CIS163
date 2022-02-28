@@ -1,5 +1,16 @@
 package Chess;
 
+/* *********************************************************************
+ * The ChessPanel class extends JPanel which is responsible for the creating
+ * the chess board, pieces, and setting the pieces in their respective locations.
+ *  The starter code was provided by our instructor Mr. Branson Beach,
+ * and it was expanded on.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Locale;
@@ -62,8 +73,12 @@ public class ChessPanel extends JPanel {
                     placeBlackPieces(r, c);
                 }
 
-                setBackGroundColor(r, c);       // Doesn't work on mac, spoke with Mr. Beach and stated to have Jack
-                                                // run the code since he has a PC.
+                // set the background color
+                setBackGroundColor(r, c);
+                // needed to do this so the setBackGround would actually show
+                board[r][c].setOpaque(true);
+                // needed to do this so the setBackGround would actually show
+                board[r][c].setBorderPainted(false);
                 boardpanel.add(board[r][c]);
             }
         }
@@ -83,7 +98,8 @@ public class ChessPanel extends JPanel {
      */
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
-            board[r][c].setBackground(Color.LIGHT_GRAY);
+            // set the background color to GVSU Blue 
+            board[r][c].setBackground(Color.decode("#264391"));
             // Only for mac to visual the spaces, comment out for non-mac users
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
             board[r][c].setBackground(Color.WHITE);

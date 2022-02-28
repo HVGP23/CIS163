@@ -1,5 +1,15 @@
 package Chess;
 
+/* *********************************************************************
+ * The ChessModel class implements IChessModel which is responsible for the
+ * chess game infrastructure. The starter code was provided by our instructor
+ * Mr. Branson Beach, and it was expanded on.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 import java.util.Locale;
 import java.util.Objects;
 

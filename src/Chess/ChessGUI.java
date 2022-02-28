@@ -1,7 +1,6 @@
 package Chess;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
@@ -9,7 +8,6 @@ import javax.swing.*;
  * GUI front end for chess
  ********************************************************************* */
 public class ChessGUI {
-
     public static void main(String[] args) {
         // create a new JFrame
         JFrame frame = new JFrame("Chess Game");
