@@ -130,14 +130,14 @@ public class ChessModel implements IChessModel {
 							}
 						}
 
-//						if (Objects.equals(board[i][j].type(), "Bishop")) {
-//							Move checkMove = new Move(i, j, kingRow, kingCol);
-//							// check if the move is valid
-//							if (board[i][j].isValidMove(checkMove, board)) {
-//								count++;
-//								System.out.println(count);
-//							}
-//						}
+						if (Objects.equals(board[i][j].type(), "Bishop")) {
+							Move checkMove = new Move(i, j, kingRow, kingCol);
+							// check if the move is valid
+							if (board[i][j].isValidMove(checkMove, board)) {
+								count++;
+								System.out.println(count);
+							}
+						}
 
 						if (Objects.equals(board[i][j].type(), "Queen")) {
 							Move checkMove = new Move(i, j, kingRow, kingCol);

@@ -49,6 +49,7 @@ public class Bishop extends ChessPiece {
 				j++;
 				if (board[i][j] != null) {
 					System.out.println("Can't jump pieces");
+					System.out.println("NorthEast");
 					return false;
 				}
 			}
@@ -62,6 +63,7 @@ public class Bishop extends ChessPiece {
 				j--;
 				if (board[i][j] != null) {
 					System.out.println("Can't jump pieces");
+					System.out.println("SouthWest");
 					return false;
 				}
 			}
@@ -74,12 +76,12 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow + 1; i < move.toRow; i++) {
 				j++;
 				if (board[i][j] != null) {
-					System.out.println("Can't jump pieces");
+					System.out.println("SouthEast");
 					return false;
 				}
 			}
 		}
-
+		// This prevents the bishop from jumping any piece when moving  northwest
 		if (move.fromRow > move.toRow && move.fromColumn > move.toColumn) {
 			int j = move.fromColumn;
 

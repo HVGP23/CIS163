@@ -48,6 +48,7 @@ public class ChessPanel extends JPanel {
         JPanel boardpanel = new JPanel();
         JPanel buttonpanel = new JPanel();
 
+
         boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 5, 5));
 
         for (int r = 0; r < model.numRows(); r++) {

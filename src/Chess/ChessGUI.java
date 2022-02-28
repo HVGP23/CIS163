@@ -1,6 +1,7 @@
 package Chess;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
@@ -16,7 +17,7 @@ public class ChessGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // undo button
         JButton undo = new JButton("Undo Move");
-        // create a new chesspanel
+        // create a new chessPanel
         ChessPanel panel = new ChessPanel();
         // add the Chess panel to the frame
         frame.getContentPane().add(panel);
