@@ -50,7 +50,7 @@ public class Knight extends ChessPiece {
 
 		// Up two over one OR down two over one
 		if (rowDiff0 == 2 && colDiff0 == 1) {
-			System.out.println(move);	// DELETE
+//			System.out.println(move);	// DELETE
 
 			// allows knight to move to an empty spot
 			if (board[move.toRow][move.toColumn] == null) {

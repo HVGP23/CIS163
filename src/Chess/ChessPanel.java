@@ -23,6 +23,8 @@ public class ChessPanel extends JPanel {
     private JButton[][] board;
     private ChessModel model;
 
+    // checkMate
+    private ImageIcon checkmate;
     // White Chess Pieces
     private ImageIcon wRook;
     private ImageIcon wBishop;
@@ -179,6 +181,9 @@ public class ChessPanel extends JPanel {
      * PNG files from the resource folder "res"
      */
     private void createIcons() {
+        // checkmate image
+        checkmate = new ImageIcon("res/checkmate.png");
+
         // Sets the Image for white chess pieces
         wRook = new ImageIcon("res/wRook.png");
         wBishop = new ImageIcon("res/wBishop.png");
@@ -275,21 +280,34 @@ public class ChessPanel extends JPanel {
                                             model.setNextPlayer();
                                             // after the player moves, the next player must check to see if they are in check
                                             if (model.inCheck(model.currentPlayer())) {
+//                                                if (model.isComplete()) {
+//                                                    if (model.currentPlayer() == Player.BLACK) {
+//                                                        System.out.println("White Wins!");
+//                                                    }
+//
+//                                                    if (model.currentPlayer() == Player.WHITE) {
+//                                                        System.out.println("Black Wins!");
+//                                                    }
+//                                                } else
+//                                                {
                                                 // adds the black king icon to the option pane
+                                                // tells the player they're in check
                                                 if (model.currentPlayer() == Player.BLACK) {
                                                     JOptionPane.showMessageDialog(null,
                                                             model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
-                                                                    " king is danger of being captured!", "black king",
+                                                                    " king is danger of being captured!", "Check",
                                                             JOptionPane.INFORMATION_MESSAGE, bKing);
                                                 }
                                                 // adds the white king icon to the option pane
+                                                // tells the player they're in check
                                                 if (model.currentPlayer() == Player.WHITE) {
                                                     JOptionPane.showMessageDialog(null,
                                                             model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
-                                                                    " king is danger of being captured!", "white king",
+                                                                    " king is danger of being captured!", "Check",
                                                             JOptionPane.INFORMATION_MESSAGE, wKing);
                                                 }
                                             }
+//                                        }
                                         }
                                     }
                                 }
