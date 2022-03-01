@@ -41,15 +41,24 @@ public class Bishop extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+		// For the Bishop, the diagonals length and width must be equal. This statement checks that
+		if(abs(move.toRow - move.fromRow) != abs(move.toColumn - move.fromColumn))
+			return false;
+
+		// This statement makes it so the white team can't remove its own pieces, or jump
+		if(board[move.toRow][move.toColumn] != null &&
+				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.WHITE)
+			return false;
+
 		// Stops the bishop from jumping pieces when moving northeast
 		if (move.fromRow > move.toRow && move.fromColumn < move.toColumn) {
 			int j = move.fromColumn;
 
 			for (int i = move.fromRow - 1; i > move.toRow; i--) {
 				j++;
-				if (board[i][j] != null) {
-					System.out.println("Can't jump pieces");
-					System.out.println("NorthEast");
+				if (board[i][j] != null &&  j < 8) {
+//					System.out.println("Can't jump pieces");
+//					System.out.println("NorthEast");
 					return false;
 				}
 			}
@@ -62,8 +71,8 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow + 1; i < move.toRow; i++) {
 				j--;
 				if (board[i][j] != null) {
-					System.out.println("Can't jump pieces");
-					System.out.println("SouthWest");
+//					System.out.println("Can't jump pieces");
+//					System.out.println("SouthWest");
 					return false;
 				}
 			}
@@ -76,7 +85,7 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow + 1; i < move.toRow; i++) {
 				j++;
 				if (board[i][j] != null) {
-					System.out.println("SouthEast");
+//					System.out.println("SouthEast");
 					return false;
 				}
 			}
@@ -88,25 +97,18 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow - 1; i > move.toRow; i--) {
 				j--;
 				if (board[i][j] != null) {
-					System.out.println("Can't jump pieces");
+//					System.out.println("Can't jump pieces");
 					return false;
 				}
 			}
 		}
 
-		// For the Bishop, the diagonals length and width must be equal. This statement checks that
-		if(abs(move.toRow - move.fromRow) != abs(move.toColumn - move.fromColumn))
-			return false;
 
-		// This statement makes it so the white team can't remove its own pieces, or jump
-		if(board[move.toRow][move.toColumn] != null &&
-				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.WHITE)
-			return false;
 
 		// This statement allows the white team to destroy black pieces
 		if(board[move.toRow][move.toColumn] != null &&
 				board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.WHITE) {
-			System.out.println("You destroyed a black piece");
+//			System.out.println("You destroyed a black piece");
 			return true;
 		}
 
@@ -116,9 +118,9 @@ public class Bishop extends ChessPiece {
 			return false;
 
 		// This statement allows the black team to destroy black pieces
-		if(board[move.toRow][move.toColumn] != null &&
+		if (board[move.toRow][move.toColumn] != null &&
 				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.BLACK) {
-			System.out.println("You destroyed a white piece");
+//			System.out.println("You destroyed a white piece");
 			return true;
 		}
 

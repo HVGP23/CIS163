@@ -10,7 +10,6 @@ package Chess;
  *
  ********************************************************************* */
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class ChessModel implements IChessModel {
@@ -68,15 +67,141 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean isComplete() {
-		boolean valid = false;
-		return valid;
+		int count = 0;
+
+		// Possible king moves
+		Move kingMove1 = new Move (kingRow, kingCol, kingRow - 1, kingCol - 1);
+		Move kingMove2 = new Move (kingRow, kingCol, kingRow - 1, kingCol);
+		Move kingMove3 = new Move (kingRow, kingCol, kingRow - 1, kingCol + 1);
+
+		Move kingMove4 = new Move (kingRow, kingCol, kingRow , kingCol - 1);
+		Move kingMove5 = new Move (kingRow, kingCol, kingRow, kingCol + 1);
+
+		Move kingMove6 = new Move (kingRow, kingCol, kingRow + 1, kingCol - 1);
+		Move kingMove7 = new Move (kingRow, kingCol, kingRow - 1, kingCol);
+		Move kingMove8 = new Move (kingRow, kingCol, kingRow - 1, kingCol + 1);
+
+		// validate that the king can move top left
+		if (board[kingRow][kingCol].isValidMove(kingMove1, board)) {
+			// if it is valid move the king to that location
+			move(kingMove1);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  { 		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove1Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove1Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove2, board)) {
+			// if it is valid move the king to that location
+			move(kingMove2);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove2Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove2Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove3, board)) {
+			// if it is valid move the king to that location
+			move(kingMove3);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove3Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove3Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove4, board)) {
+			// if it is valid move the king to that location
+			move(kingMove4);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next())) {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove4Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove4Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove5, board)) {
+			// if it is valid move the king to that location
+			move(kingMove5);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove4Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove4Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove6, board)) {
+			// if it is valid move the king to that location
+			move(kingMove6);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove6Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove6Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove7, board)) {
+			// if it is valid move the king to that location
+			move(kingMove7);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove7Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove7Back);
+		}
+
+		if (board[kingRow][kingCol].isValidMove(kingMove8, board)) {
+			// if it is valid move the king to that location
+			move(kingMove8);
+			// once moved see if that we are still in check
+			if (!inCheck(player.next()))  {		// MIGHT NEED TO BE NEXT PLAYER
+				// increment by 1 if not in check
+				count++;
+			}
+			// create new move to put the king back
+			Move kingMove8Back = new Move(kingRow - 1, kingCol - 1, kingRow, kingCol);
+			// move the king back
+			move(kingMove8Back);
+		}
+
+		return count > 0;
 	}
 
 	public boolean isValidMove(Move move) {
 		boolean valid = false;
 
 		if (board[move.fromRow][move.fromColumn] != null)
-			if (board[move.fromRow][move.fromColumn].isValidMove(move, board) == true)
+			if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
                 return true;
 
 		return valid;
@@ -109,9 +234,9 @@ public class ChessModel implements IChessModel {
 			}
 		}
 
-		// DELETE AFTER TESTING
-		System.out.println("The " + board[kingRow][kingCol].player().toString().toLowerCase(Locale.ROOT)
-				+ " King is located at " + "Row: " + kingRow + " Column: " + kingCol);
+//		// DELETE AFTER TESTING
+//		System.out.println("The " + board[kingRow][kingCol].player().toString().toLowerCase(Locale.ROOT)
+//				+ " King is located at " + "Row: " + kingRow + " Column: " + kingCol);
 
 		// check if the opposite player's pieces put the current player's king in check
 		for (int i = 0; i < board.length; i++) {

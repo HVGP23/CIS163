@@ -98,7 +98,7 @@ public class ChessPanel extends JPanel {
      */
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
-            // set the background color to GVSU Blue 
+            // set the background color to GVSU Blue
             board[r][c].setBackground(Color.decode("#264391"));
             // Only for mac to visual the spaces, comment out for non-mac users
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
@@ -290,8 +290,6 @@ public class ChessPanel extends JPanel {
                                                             JOptionPane.INFORMATION_MESSAGE, wKing);
                                                 }
                                             }
-                                            // may need to go between move and setNextPlayer
-
                                         }
                                     }
                                 }
