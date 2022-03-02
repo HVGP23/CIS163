@@ -10,16 +10,19 @@ package Chess;
  *
  ********************************************************************* */
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Stack;
 
 public class ChessModel implements IChessModel {
+	/** board is a 2D IChessPiece */
     private IChessPiece[][] board;
+	/** player of the game */
 	private Player player = Player.WHITE;
+	/** The king's row location */
 	private int kingRow;
+	/** The king's column location */
 	private int kingCol;
-
+	/** */
 	Stack<IChessPiece[][]> undoBoard = new Stack<>();
 
 	/**
@@ -108,7 +111,6 @@ public class ChessModel implements IChessModel {
 
 							}
 						}
-
 
 							if (board[i][j].isValidMove(checkMoves2, board)) {
 								// if the chess piece is owned by the other player, we can take it
@@ -453,5 +455,7 @@ public class ChessModel implements IChessModel {
 		 */
 
 		}
+
+
 
 }
