@@ -10,13 +10,17 @@ package Chess;
  *
  ********************************************************************* */
 
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Stack;
 
 public class ChessModel implements IChessModel {
-    private final IChessPiece[][] board;
+    private IChessPiece[][] board;
 	private Player player = Player.WHITE;
 	private int kingRow;
 	private int kingCol;
+
+	Stack<IChessPiece[][]> undoBoard = new Stack<>();
 
 	/**
 	 * The ChessModel Constructor creates an 8 x 8 board
@@ -24,10 +28,6 @@ public class ChessModel implements IChessModel {
 	 */
 	public ChessModel() {
 		board = new IChessPiece[8][8];
-
-//		player = Player.WHITE;
-//		player2 = Player.BLACK;
-//		setNextPlayer();		// make the first player be white
 
 		board[0][0] = new Rook(Player.BLACK);
 		board[0][1] = new Knight(Player.BLACK);
@@ -71,223 +71,13 @@ public class ChessModel implements IChessModel {
 		int fromRow = kingRow;
 		int fromCol = kingCol;
 
-		// Possible king moves
-		Move NorthWest 	= new Move (fromRow, fromCol, fromRow - 1, fromCol - 1);
-		Move North 		= new Move (fromRow, fromCol, fromRow - 1, fromCol);
-		Move NorthEast 	= new Move (fromRow, fromCol, fromRow - 1, fromCol + 1);
-
-		Move West 		= new Move (fromRow, fromCol, fromRow , fromCol - 1);
-		Move East 		= new Move (fromRow, fromCol, fromRow, fromCol + 1);
-
-		Move SouthEast 	= new Move (fromRow, fromCol, fromRow + 1, fromCol - 1);
-		Move South 		= new Move (fromRow, fromCol, fromRow + 1, fromCol);
-		Move SouthWest 	= new Move (fromRow, fromCol, fromRow + 1, fromCol + 1);
-
-		// validate that the king can move NorthWest
-		if (board[fromRow][fromCol].isValidMove(NorthWest, board)) {
-			if (board[fromRow - 1][fromCol].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow - 1][fromCol - 1].player().equals(player.next())) {
-//				if (inCheck(currentPlayer()))  {
-					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(NorthWest);
-					// once moved see if that we are still in check
-					if (inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove1Back = new Move(fromRow - 1, fromCol - 1, fromRow, fromCol);
-					// move the king back
-					move(kingMove1Back);
-				}
-			}
-		}
-
-		// validate that the king can move North
-		if (board[fromRow][fromCol].isValidMove(North, board)) {
-			if (board[fromRow - 1][fromCol].player() == null || board[fromRow - 1][fromCol].player() != null) {
-			// if the chess piece is owned by the other player, we can take it
-			if (board[fromRow - 1][fromCol].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-				count++;
-//				}
-			} else {
-				// if it is valid move the king to that location
-				move(North);
-				// once moved see if that we are still in check
-				if (!inCheck(currentPlayer())) {
-					// increment by 1 if not in check
-					count++;
-				}
-				// create new move to put the king back
-				Move kingMove2Back = new Move(fromRow - 1, fromCol, fromRow, fromCol);
-				// move the king back
-				move(kingMove2Back);
-			}
-		}
-		}
-
-		// validate that the king can move NorthEast
-		if (board[fromRow][fromCol].isValidMove(NorthEast, board)) {
-			if (board[fromRow - 1][fromCol + 1].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow - 1][fromCol + 1].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(NorthEast);
-					// once moved see if that we are still in check
-					if (!inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove3Back = new Move(fromRow - 1, fromCol + 1, fromRow, fromCol);
-					// move the king back
-					move(kingMove3Back);
-				}
-			}
-		}
-
-		// validate that the king can move West
-		if (board[fromRow][fromCol].isValidMove(West, board)) {
-			if (board[fromRow][fromCol - 1].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow][fromCol - 1].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(West);
-					// once moved see if that we are still in check
-					if (!inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove4Back = new Move(fromRow, fromCol - 1, fromRow, fromCol);
-					// move the king back
-					move(kingMove4Back);
-				}
-			}
-		}
-
-		// validate that the king can move East
-		if (board[fromRow][fromCol].isValidMove(East, board)) {
-			if (board[fromRow][fromCol + 1].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow][fromCol + 1].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(East);
-					// once moved see if that we are still in check
-					if (!inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove4Back = new Move(fromRow, fromCol + 1, fromRow, fromCol);
-					// move the king back
-					move(kingMove4Back);
-				}
-			}
-		}
-
-		// validate that the king can move SouthEast
-		if (board[fromRow][fromCol].isValidMove(SouthEast, board)) {
-			if (board[fromRow + 1][fromCol - 1].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow + 1][fromCol - 1].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(SouthEast);
-					// once moved see if that we are still in check
-					if (!inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove6Back = new Move(fromRow + 1, fromCol - 1, fromRow, fromCol);
-					// move the king back
-					move(kingMove6Back);
-				}
-			}
-		}
-
-		// validate that the king can move South
-		if (board[fromRow][fromCol].isValidMove(South, board)) {
-			if (board[fromRow + 1][fromCol].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow + 1][fromCol].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(South);
-					// once moved see if that we are still in check
-					if (!inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove7Back = new Move(fromRow + 1, fromCol, fromRow, fromCol);
-					// move the king back
-					move(kingMove7Back);
-				}
-			}
-		}
-
-		// validate that the king can move SouthWest
-		if (board[fromRow][fromCol].isValidMove(SouthWest, board)) {
-			if (board[fromRow + 1][fromCol + 1].player() != null) {
-				// if the chess piece is owned by the other player, we can take it
-				if (board[fromRow + 1][fromCol + 1].player().equals(player.next())) {
-//				if (inCheck(currentPlayer())) {
-//					// increment by 1 if not in check
-					count++;
-//				}
-				} else {
-					// if it is valid move the king to that location
-					move(SouthWest);
-					// once moved see if that we are still in check
-					if (!inCheck(currentPlayer())) {
-						// increment by 1 if not in check
-						count++;
-					}
-					// create new move to put the king back
-					Move kingMove7Back = new Move(fromRow + 1, fromCol + 1, fromRow, fromCol);
-					// move the king back
-					move(kingMove7Back);
-				}
-			}
-		}
-
 		// check the rest of the allied pieces to see if they can defend the king
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				// if the space is empty, move on
 				if (board[i][j] != null) {
+
+					// if the piece located at i and j is an allied piece
 					if (board[i][j].player().equals(currentPlayer())) {
 
 						Move checkMoves = new Move(i, j, fromRow - 1, fromCol - 1);
@@ -308,16 +98,16 @@ public class ChessModel implements IChessModel {
 							} else {
 								// if it is valid move to protect the king's NorthWest side
 								move(checkMoves);
-								// once moved see if that we are still in check
+								addBoard();
+								// once moved see if that we are still in check (false if we are not in check)
 								if (!inCheck(currentPlayer())) {
 									// increment by 1 if not in check
 									count++;
 								}
-								// create new move to put the piece located at i, j
-								Move checkMovesBack = new Move(fromRow - 1, fromCol - 1, i, j);
-								// move the piece located at i, j
-								move(checkMovesBack);
+								undoBoard();
+
 							}
+						}
 
 
 							if (board[i][j].isValidMove(checkMoves2, board)) {
@@ -328,17 +118,14 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's North side
 									move(checkMoves2);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves2Back = new Move(fromRow - 1, fromCol, i, j);
-									// move the piece located at i, j
-									move(checkMoves2Back);
+									undoBoard();
 								}
-							}
 
 							if (board[i][j].isValidMove(checkMoves3, board)) {
 								// if the chess piece is owned by the other player, we can take it
@@ -348,15 +135,13 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's NorthWest side
 									move(checkMoves3);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves3Back = new Move(fromRow - 1, fromCol + 1, i, j);
-									// move the piece located at i, j
-									move(checkMoves3Back);
+									undoBoard();
 								}
 							}
 
@@ -368,15 +153,13 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's West side
 									move(checkMoves4);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves4Back = new Move(fromRow, fromCol - 1, i, j);
-									// move the piece located at i, j
-									move(checkMoves4Back);
+									undoBoard();
 								}
 							}
 
@@ -388,15 +171,13 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's East side
 									move(checkMoves5);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves5Back = new Move(fromRow, fromCol + 1, i, j);
-									// move the piece located at i, j
-									move(checkMoves5Back);
+									undoBoard();
 								}
 							}
 
@@ -408,15 +189,13 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's SouthEast side
 									move(checkMoves6);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves6Back = new Move(fromRow + 1, fromCol - 1, i, j);
-									// move the piece located at i, j
-									move(checkMoves6Back);
+									undoBoard();
 								}
 							}
 							if (board[i][j].isValidMove(checkMoves7, board)) {
@@ -427,15 +206,13 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's South side
 									move(checkMoves7);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves7Back = new Move(fromRow + 1, fromCol, i, j);
-									// move the piece located at i, j
-									move(checkMoves7Back);
+									undoBoard();
 								}
 							}
 
@@ -447,15 +224,13 @@ public class ChessModel implements IChessModel {
 								} else {
 									// if it is valid move to protect the king's SouthWest side
 									move(checkMoves8);
+									addBoard();
 									// once moved see if that we are still in check
 									if (!inCheck(currentPlayer())) {
 										// increment by 1 if not in check
 										count++;
 									}
-									// create new move to put the piece located at i, j
-									Move checkMoves8Back = new Move(fromRow + 1, fromCol + 1, i, j);
-									// move the piece located at i, j
-									move(checkMoves8Back);
+									undoBoard();
 								}
 							}
 						}
@@ -590,16 +365,73 @@ public class ChessModel implements IChessModel {
 		return 8;
 	}
 
+	/**
+	 * The pieceAt method returns the piece at a specified location
+	 * @param row
+	 * @param column
+	 * @return returns the chess piece located at a specified location
+	 */
 	public IChessPiece pieceAt(int row, int column) {
 		return board[row][column];
 	}
 
+	/**
+	 * The setNextPlayer method sets the next player
+	 */
 	public void setNextPlayer() {
 		player = player.next();
 	}
 
 	public void setPiece(int row, int column, IChessPiece piece) {
 		board[row][column] = piece;
+	}
+
+	/**
+	 * The copyBoard method creates a deep copy of the current board
+	 * @param board
+	 * @return the copyBoard method returns a cloned board
+	 */
+	public IChessPiece[][] copyBoard(IChessPiece[][] board) {
+		// create a new IChessPiece[][] field
+		IChessPiece[][] clonedBoard = new IChessPiece[8][8];
+
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				clonedBoard[i][j] = board[i][j];
+			}
+		}
+		System.out.println("We are in the copyBoard method");
+		System.out.println("Original Board: " + board.toString());
+		System.out.println("Cloned Board: " + clonedBoard.toString() + "\n");
+
+		return  clonedBoard;
+	}
+
+	/**
+	 * The setBoard method sets the board
+	 */
+	public void setBoard(IChessPiece[][] updatedBoard) {
+		board = updatedBoard;
+	}
+
+	/**
+	 * The addBoard method pushes the cloned copy of the board onto the top of the stack
+	 */
+	public void addBoard() {
+		System.out.println("We are in the addBoard method");
+		undoBoard.push(copyBoard(board));
+		System.out.println("The stack size is now" + undoBoard.size() + "\n");
+	}
+
+	/**
+	 * The undoBoard method sets the board to its previous state
+	 */
+	public void undoBoard() {
+		System.out.println("We are in the undoBoard method");
+		if (!undoBoard.isEmpty()) {
+			setBoard(undoBoard.pop());
+			System.out.println("The stack size is now : " + undoBoard.size() + "\n");
+		}
 	}
 
 	public void AI() {

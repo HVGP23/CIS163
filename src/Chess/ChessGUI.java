@@ -13,14 +13,10 @@ public class ChessGUI {
         JFrame frame = new JFrame("Chess Game");
         // allows the program to exit when the x is clicked on the window
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // undo button
-        JButton undo = new JButton("Undo Move");
         // create a new chessPanel
         ChessPanel panel = new ChessPanel();
         // add the Chess panel to the frame
         frame.getContentPane().add(panel);
-        // add the undo button
-        panel.add(undo);
         // doesn't allow the window to be resizable
         frame.setResizable(false);
         // preferred window size

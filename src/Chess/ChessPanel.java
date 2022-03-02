@@ -25,6 +25,7 @@ public class ChessPanel extends JPanel {
 
     // checkMate
     private ImageIcon checkmate;
+
     // White Chess Pieces
     private ImageIcon wRook;
     private ImageIcon wBishop;
@@ -49,23 +50,34 @@ public class ChessPanel extends JPanel {
     private int toRow;
     private int fromCol;
     private int toCol;
-
     private listener listener;
+    private listener undoListener;
 
+    JPanel boardPanel   = new JPanel();
+    JPanel boardPanel2  = new JPanel();
+    JPanel buttonPanel  = new JPanel();
+    JButton undoButton  = new JButton("Undo Move");
+
+    /**
+     * ChessPanel Constructor creates a new ChessModel, new board...
+     *
+     */
     public ChessPanel() {
-        model = new ChessModel();
-        board = new JButton[model.numRows()][model.numColumns()];
-        listener = new listener();
+        model               = new ChessModel();
+        board               = new JButton[model.numRows()][model.numColumns()];
+        listener            = new listener();
+        undoListener        = new listener();
+
         createIcons();
 
-        JPanel boardpanel = new JPanel();
-        JPanel buttonpanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 5, 5));
 
-
-        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 5, 5));
+        undoButton.addActionListener(undoListener);
 
         for (int r = 0; r < model.numRows(); r++) {
+
             for (int c = 0; c < model.numColumns(); c++) {
+
                 if (model.pieceAt(r, c) == null) {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
@@ -81,13 +93,17 @@ public class ChessPanel extends JPanel {
                 board[r][c].setOpaque(true);
                 // needed to do this so the setBackGround would actually show
                 board[r][c].setBorderPainted(false);
-                boardpanel.add(board[r][c]);
+                boardPanel.add(board[r][c]);
             }
         }
 
-        add(boardpanel, BorderLayout.WEST);
-        boardpanel.setPreferredSize(new Dimension(600, 600));
-        add(buttonpanel);
+        add(boardPanel, BorderLayout.WEST);
+        add(boardPanel2, BorderLayout.EAST);
+
+        boardPanel.setPreferredSize(new Dimension(600, 600));
+        add(buttonPanel);
+        // add the undoButton
+        boardPanel2.add(undoButton);
         firstTurnFlag = true;
     }
 
@@ -252,69 +268,83 @@ public class ChessPanel extends JPanel {
     // inner class that represents action listener for buttons
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-                for (int r = 0; r < model.numRows(); r++) {
-                    for (int c = 0; c < model.numColumns(); c++) {
-                        if (board[r][c] == event.getSource())
-                            // initial click of the piece to obtain the "from" location
-                            if (firstTurnFlag) {
-//                                System.out.println(model.currentPlayer().toString().toLowerCase(Locale.ROOT));
+
+            if (undoButton == event.getSource()) {
+                    model.undoBoard();
+
+                //  display the board
+                    displayBoard();
+            }
+
+            for (int r = 0; r < model.numRows(); r++) {
+                for (int c = 0; c < model.numColumns(); c++) {
+
+                    if (board[r][c] == event.getSource()) {
+                        // initial click of the piece to obtain the "from" location
+                        if (firstTurnFlag) {
                                 fromRow = r;
                                 fromCol = c;
                                 firstTurnFlag = false;
                                 // The "to" location of the piece selected
-                            } else {
+                        } else {
                                 toRow = r;
                                 toCol = c;
                                 firstTurnFlag = true;
                                 Move m = new Move(fromRow, fromCol, toRow, toCol);
+
                                 // we cannot move a null piece to another location doesn't make sense
                                 if (model.pieceAt(fromRow, fromCol) != null) {
+
                                     // only allows the current player to go
                                     if (model.pieceAt(fromRow, fromCol).player().equals(model.currentPlayer())) {
+
                                         // if the move is valid
                                         if ((model.isValidMove(m))) {
                                             // move the chess piece
                                             model.move(m);
+                                            // display the board
                                             displayBoard();
+                                            // add the current board to the stack
+                                            model.addBoard();
                                             // next player is up
                                             model.setNextPlayer();
                                             // after the player moves, the next player must check to see if they are in check
                                             if (model.inCheck(model.currentPlayer())) {
-//                                                if (model.isComplete()) {
-//                                                    if (model.currentPlayer() == Player.BLACK) {
-//                                                        System.out.println("White Wins!");
-//                                                    }
-//
-//                                                    if (model.currentPlayer() == Player.WHITE) {
-//                                                        System.out.println("Black Wins!");
-//                                                    }
-//                                                } else
-//                                                {
-                                                // adds the black king icon to the option pane
-                                                // tells the player they're in check
-                                                if (model.currentPlayer() == Player.BLACK) {
-                                                    JOptionPane.showMessageDialog(null,
-                                                            model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
-                                                                    " king is danger of being captured!", "Check",
-                                                            JOptionPane.INFORMATION_MESSAGE, bKing);
-                                                }
-                                                // adds the white king icon to the option pane
-                                                // tells the player they're in check
-                                                if (model.currentPlayer() == Player.WHITE) {
-                                                    JOptionPane.showMessageDialog(null,
-                                                            model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
-                                                                    " king is danger of being captured!", "Check",
-                                                            JOptionPane.INFORMATION_MESSAGE, wKing);
+                                                if (model.isComplete()) {
+                                                    if (model.currentPlayer() == Player.BLACK) {
+                                                        System.out.println("White Wins!");
+                                                    }
+
+                                                    if (model.currentPlayer() == Player.WHITE) {
+                                                        System.out.println("Black Wins!");
+                                                    }
+                                                } else {
+                                                    // adds the black king icon to the option pane
+                                                    // tells the player they're in check
+                                                    if (model.currentPlayer() == Player.BLACK) {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
+                                                                        " king is danger of being captured!", "Check",
+                                                                JOptionPane.INFORMATION_MESSAGE, bKing);
+                                                    }
+
+                                                    // adds the white king icon to the option pane
+                                                    // tells the player they're in check
+                                                    if (model.currentPlayer() == Player.WHITE) {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                model.currentPlayer().toString().toLowerCase(Locale.ROOT) +
+                                                                        " king is danger of being captured!", "Check",
+                                                                JOptionPane.INFORMATION_MESSAGE, wKing);
+                                                    }
                                                 }
                                             }
-//                                        }
                                         }
                                     }
                                 }
                             }
-
                     }
                 }
+            }
         }
     }
 }
