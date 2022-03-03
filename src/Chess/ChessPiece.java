@@ -1,5 +1,15 @@
 package Chess;
 
+/* *********************************************************************
+ * The ChessPiece class is an abstract class that is inherited by all the
+ * chess pieces in the chess game. That is, a knight "is a" ChessPiece, and
+ * it inherits the parent's methods.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 public abstract class ChessPiece implements IChessPiece {
 
 	// Instantiation of a Player Object named owner

@@ -25,22 +25,31 @@ public class ChessModel implements IChessModel {
 	/** */
 	Stack<IChessPiece[][]> undoBoard = new Stack<>();
 
-	/**
-	 * The ChessModel Constructor creates an 8 x 8 board
-	 *
-	 */
+	/** ****************************************************************
+	 * The ChessModel Constructor creates an 8 x 8 board and
+	 * assigns chess pieces to their respective location
+	 **************************************************************** */
 	public ChessModel() {
+		// instantiate a new 2D IChessPiece that is 8 x 8
 		board = new IChessPiece[8][8];
 
+		// sets the initial location for the black Rook
 		board[0][0] = new Rook(Player.BLACK);
+		// sets the initial location for the black Knight
 		board[0][1] = new Knight(Player.BLACK);
+		// sets the initial location for the black Bishop
 		board[0][2] = new Bishop(Player.BLACK);
+		// sets the initial location for the black Queen
 		board[0][3] = new Queen(Player.BLACK);
+		// sets the initial location for the black King
 		board[0][4] = new King(Player.BLACK);
+		// sets the initial location for the black Bishop
 		board[0][5] = new Bishop(Player.BLACK);
+		// sets the initial location for the black Knight
 		board[0][6] = new Knight (Player.BLACK);
+		// sets the initial location for the black Rook
 		board[0][7] = new Rook(Player.BLACK);
-
+		// sets the initial location for the black Pawns
 		board[1][0] = new Pawn(Player.BLACK);
 		board[1][1] = new Pawn(Player.BLACK);
 		board[1][2] = new Pawn(Player.BLACK);
@@ -50,15 +59,23 @@ public class ChessModel implements IChessModel {
 		board[1][6] = new Pawn(Player.BLACK);
 		board[1][7] = new Pawn(Player.BLACK);
 
+		// sets the initial location for the white Rook
         board[7][0] = new Rook(Player.WHITE);
+		// sets the initial location for the white Knight
         board[7][1] = new Knight(Player.WHITE);
+		// sets the initial location for the white Bishop
         board[7][2] = new Bishop(Player.WHITE);
+		// sets the initial location for the white Queen
         board[7][3] = new Queen(Player.WHITE);
+		// sets the initial location for the white King
         board[7][4] = new King(Player.WHITE);
+		// sets the initial location for the white Bishop
         board[7][5] = new Bishop(Player.WHITE);
+		// sets the initial location for the white King
         board[7][6] = new Knight (Player.WHITE);
+		// sets the initial location for the white Rook
         board[7][7] = new Rook(Player.WHITE);
-
+		// sets the initial location for the white Pawns
 		board[6][0] = new Pawn(Player.WHITE);
 		board[6][1] = new Pawn(Player.WHITE);
 		board[6][2] = new Pawn(Player.WHITE);
@@ -69,6 +86,13 @@ public class ChessModel implements IChessModel {
 		board[6][7] = new Pawn(Player.WHITE);
 	}
 
+
+	/**	****************************************************************
+	 * The isComplete method verifies that a player's king nor allied pieces
+	 * is capable of moving and protecting their king
+	 *
+	 * @return returns if your king is going to be captured, or it is trapped
+	 **************************************************************** */
 	public boolean isComplete() {
 		int count = 0;
 		int fromRow = kingRow;
@@ -108,7 +132,6 @@ public class ChessModel implements IChessModel {
 									count++;
 								}
 								undoBoard();
-
 							}
 						}
 
@@ -244,6 +267,13 @@ public class ChessModel implements IChessModel {
 		return count == 0;
 	}
 
+	/** ****************************************************************
+	 * The isValidMove method verifies that a move is valid
+	 *
+	 * @param move object describing the move to be made.
+	 * @return returns true if the move is valid for the respective chess
+	 * piece
+	 **************************************************************** */
 	public boolean isValidMove(Move move) {
 		boolean valid = false;
 
@@ -254,11 +284,26 @@ public class ChessModel implements IChessModel {
 		return valid;
 	}
 
+	/** ****************************************************************
+	 * The move method updates the chess piece's location, once moved the
+	 * "from" location is updated to null.
+	 *
+	 * @param move a object describing the move to be made.
+	 **************************************************************** */
 	public void move(Move move) {
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 	}
 
+	/**
+	 * The inCheck method checks to see if the current player's king is
+	 * at risk of being captured or trapped. The next move from the current
+	 * player must be to protect the king.
+	 *
+	 * @param p the Player being checked
+	 * @return returns true if the current player's king is in danger of
+	 * being captured or trapped.
+	 */
 	public boolean inCheck(Player p) {
 		boolean inCheck = false;
 		int count = 0;
@@ -280,10 +325,6 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-
-//		// DELETE AFTER TESTING
-//		System.out.println("The " + board[kingRow][kingCol].player().toString().toLowerCase(Locale.ROOT)
-//				+ " King is located at " + "Row: " + kingRow + " Column: " + kingCol);
 
 		// check if the opposite player's pieces put the current player's king in check
 		for (int i = 0; i < board.length; i++) {
@@ -355,84 +396,98 @@ public class ChessModel implements IChessModel {
 		return inCheck;
 	}
 
+	/** ****************************************************************
+	 * The currentPlayer() method returns the current player
+	 * @return returns the current player
+	 **************************************************************** */
 	public Player currentPlayer() {
 		return player;
 	}
 
+	/** ****************************************************************
+	 * The numRows method returns the amount of rows
+	 * @return returns the amount of rows
+	 **************************************************************** */
 	public int numRows() {
 		return 8;
 	}
-
+	/** ****************************************************************
+	 * The numColumns method returns the amount of columns
+	 * @return returns the amount of columns
+	 **************************************************************** */
 	public int numColumns() {
 		return 8;
 	}
 
-	/**
+	/** ****************************************************************
 	 * The pieceAt method returns the piece at a specified location
+	 *
 	 * @param row
 	 * @param column
 	 * @return returns the chess piece located at a specified location
-	 */
+	 **************************************************************** */
 	public IChessPiece pieceAt(int row, int column) {
 		return board[row][column];
 	}
 
-	/**
+	/** ****************************************************************
 	 * The setNextPlayer method sets the next player
-	 */
+	 **************************************************************** */
 	public void setNextPlayer() {
 		player = player.next();
 	}
 
+	/** ****************************************************************
+	 * The setPiece method sets a specified chess piece to a specified
+	 * location on the chess board
+	 *
+	 * @param row
+	 * @param column
+	 * @param piece
+	 **************************************************************** */
 	public void setPiece(int row, int column, IChessPiece piece) {
 		board[row][column] = piece;
 	}
 
-	/**
+	/** ****************************************************************
 	 * The copyBoard method creates a deep copy of the current board
 	 * @param board
 	 * @return the copyBoard method returns a cloned board
-	 */
+	 **************************************************************** */
 	public IChessPiece[][] copyBoard(IChessPiece[][] board) {
 		// create a new IChessPiece[][] field
 		IChessPiece[][] clonedBoard = new IChessPiece[8][8];
 
+		// creates a deep copy of the current board
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				clonedBoard[i][j] = board[i][j];
 			}
 		}
-		System.out.println("We are in the copyBoard method");
-		System.out.println("Original Board: " + board.toString());
-		System.out.println("Cloned Board: " + clonedBoard.toString() + "\n");
-
 		return  clonedBoard;
 	}
 
-	/**
+	/** ****************************************************************
 	 * The setBoard method sets the board
-	 */
+	 **************************************************************** */
 	public void setBoard(IChessPiece[][] updatedBoard) {
 		board = updatedBoard;
 	}
 
-	/**
-	 * The addBoard method pushes the cloned copy of the board onto the top of the stack
-	 */
+	/** ****************************************************************
+	 * The addBoard method pushes the cloned copy of the board onto the
+	 * top of the stack
+	 **************************************************************** */
 	public void addBoard() {
-		System.out.println("We are in the addBoard method");
 		undoBoard.push(copyBoard(board));
-		System.out.println("The stack size is now" + undoBoard.size() + "\n");
 	}
 
-	/**
+	/** ****************************************************************
 	 * The undoBoard method sets the board to its previous state
-	 */
+	 **************************************************************** */
 	public void undoBoard() {
-		System.out.println("We are in the undoBoard method");
 		if (!undoBoard.isEmpty()) {
 			setBoard(undoBoard.pop());
-			System.out.println("The stack size is now : " + undoBoard.size() + "\n");
 		}
 	}
 
@@ -455,7 +510,5 @@ public class ChessModel implements IChessModel {
 		 */
 
 		}
-
-
 
 }

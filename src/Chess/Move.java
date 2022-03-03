@@ -1,5 +1,14 @@
 package Chess;
 
+/* *********************************************************************
+ * The Move class provides us with a few methods to move chess pieces as
+ * well as a toString method that overrides the default toString method.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 public class Move {
 
     // class fields

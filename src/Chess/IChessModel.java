@@ -1,5 +1,17 @@
 package Chess;
 
+/* *********************************************************************
+ * The IChessModel is an abstract class that tells classes that implements
+ * it what to do, and not how to do it. Therefore, each class must define
+ * how to accomplish what the interface is telling it to do.
+ *
+ * Provided code by our instructor, Mr. Beach.
+ *
+ * @author Julia Garcia Navarro, Jack Lukomski, Hector Garcia
+ * @version February 24, 2022
+ *
+ ********************************************************************* */
+
 public interface IChessModel {
 
         /**

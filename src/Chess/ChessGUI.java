@@ -1,7 +1,9 @@
 package Chess;
 
 /* *********************************************************************
- * The ChessGUI class
+ * The ChessGUI class creates a graphical user interface for the chess
+ * game. There are four buttons added to a separate panel which are
+ * new game, human vs. cpu, cpu vs. cpu, and undo move.
  *
  * @author Julia Garcia Navarro, Jack Lukomski, and Hector Garcia
  * @version February 24, 2022

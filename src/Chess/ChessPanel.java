@@ -354,9 +354,10 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
 
             if (undoButton == event.getSource()) {
-                    model.undoBoard();
+                model.setNextPlayer();
+                model.undoBoard();
                 //  display the board
-                    displayBoard();
+                displayBoard();
             }
 
             for (int r = 0; r < model.numRows(); r++) {
@@ -383,25 +384,27 @@ public class ChessPanel extends JPanel {
 
                                         // if the move is valid
                                         if ((model.isValidMove(m))) {
+                                            // add the current board to the stack
+                                            model.addBoard();
+
                                             // move the chess piece
                                             model.move(m);
                                             // display the board
                                             displayBoard();
-                                            // add the current board to the stack
-                                            model.addBoard();
+
                                             // next player is up
                                             model.setNextPlayer();
                                             // after the player moves, the next player must check to see if they are in check
                                             if (model.inCheck(model.currentPlayer())) {
-                                                if (model.isComplete()) {
-                                                    if (model.currentPlayer() == Player.BLACK) {
-                                                        System.out.println("White Wins!");
-                                                    }
-
-                                                    if (model.currentPlayer() == Player.WHITE) {
-                                                        System.out.println("Black Wins!");
-                                                    }
-                                                } else {
+//                                                if (model.isComplete()) {
+//                                                    if (model.currentPlayer() == Player.BLACK) {
+//                                                        System.out.println("White Wins!");
+//                                                    }
+//
+//                                                    if (model.currentPlayer() == Player.WHITE) {
+//                                                        System.out.println("Black Wins!");
+//                                                    }
+//                                                } else { // if isComplete does not work, comment out this up to the if statement for model.iscomplete
                                                     // adds the black king icon to the option pane
                                                     // tells the player they're in check
                                                     if (model.currentPlayer() == Player.BLACK) {
@@ -421,7 +424,7 @@ public class ChessPanel extends JPanel {
                                                     }
                                                 }
                                             }
-                                        }
+//                                        } //If needed comment this { out if isComplete does not work
                                     }
                                 }
                             }

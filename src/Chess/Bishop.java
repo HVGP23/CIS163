@@ -57,8 +57,6 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow - 1; i > move.toRow; i--) {
 				j++;
 				if (board[i][j] != null &&  j < 8) {
-//					System.out.println("Can't jump pieces");
-//					System.out.println("NorthEast");
 					return false;
 				}
 			}
@@ -71,8 +69,6 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow + 1; i < move.toRow; i++) {
 				j--;
 				if (board[i][j] != null) {
-//					System.out.println("Can't jump pieces");
-//					System.out.println("SouthWest");
 					return false;
 				}
 			}
@@ -85,7 +81,6 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow + 1; i < move.toRow; i++) {
 				j++;
 				if (board[i][j] != null) {
-//					System.out.println("SouthEast");
 					return false;
 				}
 			}
@@ -97,7 +92,6 @@ public class Bishop extends ChessPiece {
 			for (int i = move.fromRow - 1; i > move.toRow; i--) {
 				j--;
 				if (board[i][j] != null) {
-//					System.out.println("Can't jump pieces");
 					return false;
 				}
 			}
@@ -108,7 +102,6 @@ public class Bishop extends ChessPiece {
 		// This statement allows the white team to destroy black pieces
 		if(board[move.toRow][move.toColumn] != null &&
 				board[move.toRow][move.toColumn].player() == Player.BLACK && player() == Player.WHITE) {
-//			System.out.println("You destroyed a black piece");
 			return true;
 		}
 
@@ -120,7 +113,6 @@ public class Bishop extends ChessPiece {
 		// This statement allows the black team to destroy black pieces
 		if (board[move.toRow][move.toColumn] != null &&
 				board[move.toRow][move.toColumn].player() == Player.WHITE && player() == Player.BLACK) {
-//			System.out.println("You destroyed a white piece");
 			return true;
 		}
 
